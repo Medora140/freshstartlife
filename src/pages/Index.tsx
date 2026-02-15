@@ -6,6 +6,7 @@ import StreakTracker from "@/components/StreakTracker";
 import UrgeTimer from "@/components/UrgeTimer";
 import DailyCheckin from "@/components/DailyCheckin";
 import MotivationFeed from "@/components/MotivationFeed";
+import ReplacementHabits from "@/components/ReplacementHabits";
 import { Shield, RotateCcw, Leaf } from "lucide-react";
 
 const Index = () => {
@@ -72,6 +73,7 @@ const Index = () => {
       <main className="max-w-lg mx-auto px-4 py-6 space-y-6 pb-32">
         <StreakTracker userData={userData} />
         <DailyCheckin userData={userData} onCheckin={handleCheckin} />
+        <ReplacementHabits addiction={userData.addiction} />
         <MotivationFeed />
       </main>
 

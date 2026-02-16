@@ -14,7 +14,92 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      checkins: {
+        Row: {
+          addiction_id: string
+          clean: boolean
+          created_at: string
+          date: string
+          id: string
+          mood: number
+          user_id: string
+        }
+        Insert: {
+          addiction_id: string
+          clean: boolean
+          created_at?: string
+          date?: string
+          id?: string
+          mood: number
+          user_id: string
+        }
+        Update: {
+          addiction_id?: string
+          clean?: boolean
+          created_at?: string
+          date?: string
+          id?: string
+          mood?: number
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "checkins_addiction_id_fkey"
+            columns: ["addiction_id"]
+            isOneToOne: false
+            referencedRelation: "user_addictions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      profiles: {
+        Row: {
+          created_at: string
+          id: string
+          name: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          name?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          name?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      user_addictions: {
+        Row: {
+          addiction_type: string
+          created_at: string
+          id: string
+          is_active: boolean
+          start_date: string
+          user_id: string
+        }
+        Insert: {
+          addiction_type: string
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          start_date?: string
+          user_id: string
+        }
+        Update: {
+          addiction_type?: string
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          start_date?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

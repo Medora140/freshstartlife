@@ -8,13 +8,15 @@ import UrgeTimer from "@/components/UrgeTimer";
 import DailyCheckin from "@/components/DailyCheckin";
 import MotivationFeed from "@/components/MotivationFeed";
 import ReplacementHabits from "@/components/ReplacementHabits";
-import { Shield, LogOut, Leaf } from "lucide-react";
+import EmergencySupport from "@/components/EmergencySupport";
+import { Shield, LogOut, Leaf, HeartPulse } from "lucide-react";
 
 const Dashboard = () => {
   const { user, signOut } = useAuth();
   const [userData, setUserData] = useState<UserData | null>(null);
   const [loading, setLoading] = useState(true);
   const [showUrgeTimer, setShowUrgeTimer] = useState(false);
+  const [showEmergency, setShowEmergency] = useState(false);
 
   const loadUserData = useCallback(async () => {
     if (!user) return;
@@ -155,7 +157,14 @@ const Dashboard = () => {
         <MotivationFeed />
       </main>
 
-      <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-40">
+      <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-40 flex gap-3">
+        <button
+          onClick={() => setShowEmergency(true)}
+          className="flex items-center gap-2 px-5 py-4 rounded-full bg-destructive text-destructive-foreground font-semibold shadow-soft hover:opacity-90 transition-all"
+        >
+          <HeartPulse className="w-5 h-5" />
+          SOS
+        </button>
         <button
           onClick={() => setShowUrgeTimer(true)}
           className="flex items-center gap-3 px-8 py-4 rounded-full gradient-hero text-primary-foreground font-semibold text-lg shadow-glow hover:opacity-90 transition-all animate-pulse-soft"
@@ -166,6 +175,7 @@ const Dashboard = () => {
       </div>
 
       {showUrgeTimer && <UrgeTimer onClose={() => setShowUrgeTimer(false)} />}
+      {showEmergency && <EmergencySupport onClose={() => setShowEmergency(false)} />}
     </div>
   );
 };

@@ -9,6 +9,8 @@ import DailyCheckin from "@/components/DailyCheckin";
 import MotivationFeed from "@/components/MotivationFeed";
 import ReplacementHabits from "@/components/ReplacementHabits";
 import EmergencySupport from "@/components/EmergencySupport";
+import NotificationPrompt, { scheduleReminders } from "@/components/NotificationPrompt";
+import InstallPrompt from "@/components/InstallPrompt";
 import { Shield, LogOut, Leaf, HeartPulse } from "lucide-react";
 
 const Dashboard = () => {
@@ -67,6 +69,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     loadUserData();
+    scheduleReminders();
   }, [loadUserData]);
 
   const handleOnboardingComplete = async (name: string, addiction: AddictionType) => {
@@ -151,6 +154,8 @@ const Dashboard = () => {
       </header>
 
       <main className="max-w-lg mx-auto px-4 py-6 space-y-6 pb-32">
+        <InstallPrompt />
+        <NotificationPrompt />
         <StreakTracker userData={userData} />
         <DailyCheckin userData={userData} onCheckin={handleCheckin} />
         <ReplacementHabits addiction={userData.addiction} />

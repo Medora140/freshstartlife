@@ -10,9 +10,11 @@ import MotivationFeed from "@/components/MotivationFeed";
 import ReplacementHabits from "@/components/ReplacementHabits";
 import EmergencySupport from "@/components/EmergencySupport";
 import WeeklyProgress from "@/components/WeeklyProgress";
+import TreeForest from "@/components/TreeForest";
 import NotificationPrompt, { scheduleReminders } from "@/components/NotificationPrompt";
 import InstallPrompt from "@/components/InstallPrompt";
-import { Shield, LogOut, Leaf, HeartPulse } from "lucide-react";
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+import { Shield, LogOut, Leaf, HeartPulse, TreePine, Home } from "lucide-react";
 
 const Dashboard = () => {
   const { user, signOut } = useAuth();
@@ -154,14 +156,33 @@ const Dashboard = () => {
         </div>
       </header>
 
-      <main className="max-w-lg mx-auto px-4 py-6 space-y-6 pb-32">
-        <InstallPrompt />
-        <NotificationPrompt />
-        <StreakTracker userData={userData} />
-        <DailyCheckin userData={userData} onCheckin={handleCheckin} />
-        <WeeklyProgress userData={userData} />
-        <ReplacementHabits addiction={userData.addiction} />
-        <MotivationFeed />
+      <main className="max-w-lg mx-auto px-4 py-6 pb-32">
+        <Tabs defaultValue="home" className="w-full">
+          <TabsList className="w-full mb-6">
+            <TabsTrigger value="home" className="flex-1 gap-1.5">
+              <Home className="w-4 h-4" />
+              Home
+            </TabsTrigger>
+            <TabsTrigger value="forest" className="flex-1 gap-1.5">
+              <TreePine className="w-4 h-4" />
+              Forest
+            </TabsTrigger>
+          </TabsList>
+
+          <TabsContent value="home" className="space-y-6">
+            <InstallPrompt />
+            <NotificationPrompt />
+            <StreakTracker userData={userData} />
+            <DailyCheckin userData={userData} onCheckin={handleCheckin} />
+            <WeeklyProgress userData={userData} />
+            <ReplacementHabits addiction={userData.addiction} />
+            <MotivationFeed />
+          </TabsContent>
+
+          <TabsContent value="forest">
+            <TreeForest />
+          </TabsContent>
+        </Tabs>
       </main>
 
       <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-40 flex gap-3">

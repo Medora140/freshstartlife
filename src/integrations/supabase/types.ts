@@ -54,18 +54,21 @@ export type Database = {
       }
       profiles: {
         Row: {
+          coins: number
           created_at: string
           id: string
           name: string
           user_id: string
         }
         Insert: {
+          coins?: number
           created_at?: string
           id?: string
           name?: string
           user_id: string
         }
         Update: {
+          coins?: number
           created_at?: string
           id?: string
           name?: string
@@ -96,6 +99,36 @@ export type Database = {
           id?: string
           is_active?: boolean
           start_date?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      user_trees: {
+        Row: {
+          created_at: string
+          growth_stage: number
+          id: string
+          is_alive: boolean
+          planted_at: string
+          tree_type: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          growth_stage?: number
+          id?: string
+          is_alive?: boolean
+          planted_at?: string
+          tree_type?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          growth_stage?: number
+          id?: string
+          is_alive?: boolean
+          planted_at?: string
+          tree_type?: string
           user_id?: string
         }
         Relationships: []

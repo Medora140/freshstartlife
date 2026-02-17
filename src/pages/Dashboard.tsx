@@ -9,6 +9,7 @@ import DailyCheckin from "@/components/DailyCheckin";
 import MotivationFeed from "@/components/MotivationFeed";
 import ReplacementHabits from "@/components/ReplacementHabits";
 import EmergencySupport from "@/components/EmergencySupport";
+import WeeklyProgress from "@/components/WeeklyProgress";
 import NotificationPrompt, { scheduleReminders } from "@/components/NotificationPrompt";
 import InstallPrompt from "@/components/InstallPrompt";
 import { Shield, LogOut, Leaf, HeartPulse } from "lucide-react";
@@ -158,6 +159,7 @@ const Dashboard = () => {
         <NotificationPrompt />
         <StreakTracker userData={userData} />
         <DailyCheckin userData={userData} onCheckin={handleCheckin} />
+        <WeeklyProgress userData={userData} />
         <ReplacementHabits addiction={userData.addiction} />
         <MotivationFeed />
       </main>

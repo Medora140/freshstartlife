@@ -5,6 +5,7 @@ import { TREE_TYPES, POINTS_PER_STAGE, MAX_STAGE, COINS_PER_CLEAN_DAY, type Tree
 import { Coins, ShoppingBag, TreePine, Sprout, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
+import TreeCelebration from "@/components/TreeCelebration";
 
 interface UserTree {
   id: string;
@@ -20,6 +21,11 @@ const TreeForest = () => {
   const [coins, setCoins] = useState(0);
   const [showShop, setShowShop] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [celebration, setCelebration] = useState<{
+    treeName: string;
+    treeEmoji: string;
+    newStage: number;
+  } | null>(null);
 
   const loadData = useCallback(async () => {
     if (!user) return;
@@ -55,6 +61,15 @@ const TreeForest = () => {
       const newStage = Math.min(MAX_STAGE, Math.floor((count || 0) / POINTS_PER_STAGE));
       if (newStage !== tree.growth_stage) {
         await supabase.from("user_trees").update({ growth_stage: newStage }).eq("id", tree.id);
+        // Trigger celebration
+        const treeType = TREE_TYPES.find((t) => t.id === tree.tree_type);
+        if (treeType) {
+          setCelebration({
+            treeName: treeType.name,
+            treeEmoji: treeType.stages[newStage],
+            newStage,
+          });
+        }
       }
     }
 
@@ -257,6 +272,14 @@ const TreeForest = () => {
           </div>
         </div>
       )}
+
+      <TreeCelebration
+        show={!!celebration}
+        treeName={celebration?.treeName || ""}
+        treeEmoji={celebration?.treeEmoji || ""}
+        newStage={celebration?.newStage || 0}
+        onComplete={() => setCelebration(null)}
+      />
     </div>
   );
 };

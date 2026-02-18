@@ -138,7 +138,17 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      get_forest_leaderboard: {
+        Args: never
+        Returns: {
+          display_name: string
+          is_current_user: boolean
+          mature_trees: number
+          rank: number
+          total_growth: number
+          tree_count: number
+        }[]
+      }
     }
     Enums: {
       [_ in never]: never

@@ -11,6 +11,7 @@ import ReplacementHabits from "@/components/ReplacementHabits";
 import EmergencySupport from "@/components/EmergencySupport";
 import WeeklyProgress from "@/components/WeeklyProgress";
 import TreeForest from "@/components/TreeForest";
+import ForestLeaderboard from "@/components/ForestLeaderboard";
 import NotificationPrompt, { scheduleReminders } from "@/components/NotificationPrompt";
 import InstallPrompt from "@/components/InstallPrompt";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
@@ -179,8 +180,9 @@ const Dashboard = () => {
             <MotivationFeed />
           </TabsContent>
 
-          <TabsContent value="forest">
+          <TabsContent value="forest" className="space-y-6">
             <TreeForest />
+            <ForestLeaderboard />
           </TabsContent>
         </Tabs>
       </main>

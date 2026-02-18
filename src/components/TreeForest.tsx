@@ -185,9 +185,14 @@ const TreeForest = () => {
                 return (
                   <div
                     key={tree.id}
-                    className="flex flex-col items-center gap-1 p-3 rounded-xl bg-muted/50 hover:bg-muted transition-colors"
+                    className={`relative flex flex-col items-center gap-1 p-3 rounded-xl bg-muted/50 hover:bg-muted transition-colors overflow-hidden ${
+                      display.maxStage ? "animate-shimmer" : ""
+                    }`}
                   >
-                    <span className={`text-4xl ${display.maxStage ? "" : "animate-pulse-soft"}`}>
+                    {display.maxStage && (
+                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-primary/10 to-transparent animate-shimmer-sweep pointer-events-none" />
+                    )}
+                    <span className={`text-4xl relative z-10 ${display.maxStage ? "" : "animate-pulse-soft"}`}>
                       {display.emoji}
                     </span>
                     <span className="text-[10px] text-muted-foreground font-medium truncate w-full text-center">

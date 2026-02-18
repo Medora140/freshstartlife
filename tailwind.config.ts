@@ -106,6 +106,10 @@ export default {
           "0%": { transform: "scale(0.8)", opacity: "0" },
           "100%": { transform: "scale(1)", opacity: "1" },
         },
+        "shimmer-sweep": {
+          "0%": { transform: "translateX(-100%)" },
+          "100%": { transform: "translateX(100%)" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -113,6 +117,7 @@ export default {
         "confetti-particle": "confetti-particle 2s ease-out forwards",
         "bounce-once": "bounce-once 0.6s ease-out",
         "scale-in": "scale-in 0.3s ease-out",
+        "shimmer-sweep": "shimmer-sweep 2.5s ease-in-out infinite",
       },
     },
   },

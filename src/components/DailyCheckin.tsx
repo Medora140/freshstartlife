@@ -1,7 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { MOOD_OPTIONS, type UserData } from "@/lib/freshstart-data";
 import { CheckCircle2, XCircle } from "lucide-react";
 import TreeGrowthAnimation from "@/components/TreeGrowthAnimation";
+import { supabase } from "@/integrations/supabase/client";
+import { useAuth } from "@/hooks/useAuth";
+import { TREE_TYPES } from "@/lib/tree-data";
 
 interface DailyCheckinProps {
   userData: UserData;
@@ -9,9 +12,30 @@ interface DailyCheckinProps {
 }
 
 const DailyCheckin = ({ userData, onCheckin }: DailyCheckinProps) => {
+  const { user } = useAuth();
   const [step, setStep] = useState<"clean" | "mood" | "done">("clean");
   const [isClean, setIsClean] = useState<boolean | null>(null);
   const [selectedMood, setSelectedMood] = useState<number | null>(null);
+  const [activeTreeStages, setActiveTreeStages] = useState<string[] | undefined>(undefined);
+
+  // Fetch the user's most recent tree to use its stages in the animation
+  useEffect(() => {
+    if (!user) return;
+    supabase
+      .from("user_trees")
+      .select("tree_type")
+      .eq("user_id", user.id)
+      .eq("is_alive", true)
+      .order("planted_at", { ascending: false })
+      .limit(1)
+      .maybeSingle()
+      .then(({ data }) => {
+        if (data) {
+          const treeType = TREE_TYPES.find((t) => t.id === data.tree_type);
+          if (treeType) setActiveTreeStages(treeType.stages);
+        }
+      });
+  }, [user]);
 
   const today = new Date().toISOString().split("T")[0];
   const alreadyCheckedIn = userData.checkins.some((c) => c.date === today);
@@ -35,7 +59,7 @@ const DailyCheckin = ({ userData, onCheckin }: DailyCheckinProps) => {
       <div className="glass-card p-6 text-center space-y-3 animate-fade-up">
         {isClean ? (
           <>
-            <TreeGrowthAnimation />
+            <TreeGrowthAnimation stages={activeTreeStages} />
             <h3 className="font-serif text-lg text-foreground">Your tree is growing! 🌳</h3>
             <p className="text-sm text-muted-foreground">Amazing! Another clean day fuels your forest.</p>
           </>

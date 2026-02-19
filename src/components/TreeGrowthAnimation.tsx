@@ -1,23 +1,22 @@
 import { useState, useEffect } from "react";
 
-const STAGES = [
-  { emoji: "🌰", label: "Seed", scale: "scale-75" },
-  { emoji: "🌱", label: "Sprout", scale: "scale-90" },
-  { emoji: "🪴", label: "Sapling", scale: "scale-100" },
-  { emoji: "🌿", label: "Growing", scale: "scale-110" },
-  { emoji: "🌳", label: "Tree", scale: "scale-125" },
-];
+const DEFAULT_STAGES = ["🌰", "🌱", "🪴", "🌿", "🌳"];
+const STAGE_LABELS = ["Seed", "Sprout", "Sapling", "Growing", "Tree"];
+const STAGE_SCALES = ["scale-75", "scale-90", "scale-100", "scale-110", "scale-125"];
 
 interface TreeGrowthAnimationProps {
+  /** Custom emoji stages from the user's tree type */
+  stages?: string[];
   onComplete?: () => void;
 }
 
-const TreeGrowthAnimation = ({ onComplete }: TreeGrowthAnimationProps) => {
+const TreeGrowthAnimation = ({ stages, onComplete }: TreeGrowthAnimationProps) => {
+  const emojis = stages && stages.length === 5 ? stages : DEFAULT_STAGES;
   const [currentStage, setCurrentStage] = useState(0);
   const [transitioning, setTransitioning] = useState(false);
 
   useEffect(() => {
-    if (currentStage >= STAGES.length - 1) {
+    if (currentStage >= emojis.length - 1) {
       const timer = setTimeout(() => onComplete?.(), 1200);
       return () => clearTimeout(timer);
     }
@@ -31,15 +30,11 @@ const TreeGrowthAnimation = ({ onComplete }: TreeGrowthAnimationProps) => {
     }, 900);
 
     return () => clearTimeout(timer);
-  }, [currentStage, onComplete]);
-
-  const stage = STAGES[currentStage];
+  }, [currentStage, onComplete, emojis.length]);
 
   return (
     <div className="flex flex-col items-center gap-4 py-4">
-      {/* Tree emoji with morph animation */}
       <div className="relative h-28 w-28 flex items-center justify-center">
-        {/* Glow ring */}
         <div
           className="absolute inset-0 rounded-full bg-primary/10 transition-all duration-700"
           style={{
@@ -47,7 +42,6 @@ const TreeGrowthAnimation = ({ onComplete }: TreeGrowthAnimationProps) => {
             opacity: 0.3 + currentStage * 0.15,
           }}
         />
-        {/* Sparkle particles */}
         {currentStage > 0 && !transitioning && (
           <>
             {[...Array(3)].map((_, i) => (
@@ -66,34 +60,29 @@ const TreeGrowthAnimation = ({ onComplete }: TreeGrowthAnimationProps) => {
             ))}
           </>
         )}
-        {/* Main emoji */}
         <span
-          className={`text-7xl relative z-10 transition-all duration-500 ease-out ${stage.scale} ${
+          className={`text-7xl relative z-10 transition-all duration-500 ease-out ${STAGE_SCALES[currentStage] || "scale-100"} ${
             transitioning ? "opacity-0 blur-sm scale-50" : "opacity-100 blur-0"
           }`}
         >
-          {stage.emoji}
+          {emojis[currentStage]}
         </span>
       </div>
 
-      {/* Stage label */}
       <p
         className={`text-sm font-semibold text-primary transition-all duration-300 ${
           transitioning ? "opacity-0 translate-y-2" : "opacity-100 translate-y-0"
         }`}
       >
-        {stage.label}
+        {STAGE_LABELS[currentStage] || ""}
       </p>
 
-      {/* Progress dots */}
       <div className="flex gap-2">
-        {STAGES.map((_, i) => (
+        {emojis.map((_, i) => (
           <div
             key={i}
             className={`h-2 rounded-full transition-all duration-500 ${
-              i <= currentStage
-                ? "bg-primary w-4"
-                : "bg-border w-2"
+              i <= currentStage ? "bg-primary w-4" : "bg-border w-2"
             }`}
           />
         ))}

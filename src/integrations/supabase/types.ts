@@ -110,6 +110,8 @@ export type Database = {
           id: string
           is_alive: boolean
           planted_at: string
+          position_x: number
+          position_y: number
           tree_type: string
           user_id: string
         }
@@ -119,6 +121,8 @@ export type Database = {
           id?: string
           is_alive?: boolean
           planted_at?: string
+          position_x?: number
+          position_y?: number
           tree_type?: string
           user_id: string
         }
@@ -128,6 +132,8 @@ export type Database = {
           id?: string
           is_alive?: boolean
           planted_at?: string
+          position_x?: number
+          position_y?: number
           tree_type?: string
           user_id?: string
         }

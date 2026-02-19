@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { MOOD_OPTIONS, type UserData } from "@/lib/freshstart-data";
 import { CheckCircle2, XCircle } from "lucide-react";
+import TreeGrowthAnimation from "@/components/TreeGrowthAnimation";
 
 interface DailyCheckinProps {
   userData: UserData;
@@ -32,11 +33,19 @@ const DailyCheckin = ({ userData, onCheckin }: DailyCheckinProps) => {
   if (step === "done") {
     return (
       <div className="glass-card p-6 text-center space-y-3 animate-fade-up">
-        <div className="text-4xl">🌿</div>
-        <h3 className="font-serif text-lg text-foreground">Check-in saved!</h3>
-        <p className="text-sm text-muted-foreground">
-          {isClean ? "Amazing! Another day of freedom." : "Tomorrow is a new chance. We believe in you."}
-        </p>
+        {isClean ? (
+          <>
+            <TreeGrowthAnimation />
+            <h3 className="font-serif text-lg text-foreground">Your tree is growing! 🌳</h3>
+            <p className="text-sm text-muted-foreground">Amazing! Another clean day fuels your forest.</p>
+          </>
+        ) : (
+          <>
+            <div className="text-4xl">💪</div>
+            <h3 className="font-serif text-lg text-foreground">Check-in saved!</h3>
+            <p className="text-sm text-muted-foreground">Tomorrow is a new chance. We believe in you.</p>
+          </>
+        )}
       </div>
     );
   }

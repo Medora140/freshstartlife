@@ -12,10 +12,11 @@ import EmergencySupport from "@/components/EmergencySupport";
 import WeeklyProgress from "@/components/WeeklyProgress";
 import TreeForest from "@/components/TreeForest";
 import ForestLeaderboard from "@/components/ForestLeaderboard";
+import Garden from "@/components/Garden";
 import NotificationPrompt, { scheduleReminders } from "@/components/NotificationPrompt";
 import InstallPrompt from "@/components/InstallPrompt";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-import { Shield, LogOut, Leaf, HeartPulse, TreePine, Home } from "lucide-react";
+import { Shield, LogOut, Leaf, HeartPulse, TreePine, Home, Flower2 } from "lucide-react";
 
 const Dashboard = () => {
   const { user, signOut } = useAuth();
@@ -164,6 +165,10 @@ const Dashboard = () => {
               <Home className="w-4 h-4" />
               Home
             </TabsTrigger>
+            <TabsTrigger value="garden" className="flex-1 gap-1.5">
+              <Flower2 className="w-4 h-4" />
+              Garden
+            </TabsTrigger>
             <TabsTrigger value="forest" className="flex-1 gap-1.5">
               <TreePine className="w-4 h-4" />
               Forest
@@ -178,6 +183,10 @@ const Dashboard = () => {
             <WeeklyProgress userData={userData} />
             <ReplacementHabits addiction={userData.addiction} />
             <MotivationFeed />
+          </TabsContent>
+
+          <TabsContent value="garden" className="space-y-6">
+            <Garden />
           </TabsContent>
 
           <TabsContent value="forest" className="space-y-6">

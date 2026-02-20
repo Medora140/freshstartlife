@@ -75,7 +75,7 @@ export const TREE_TYPES: TreeType[] = [
 ];
 
 // Growth: each clean day = 1 growth point. 5 points = 1 stage. Max stage = 4.
-export const POINTS_PER_STAGE = 5;
+export const POINTS_PER_STAGE = 1;
 export const MAX_STAGE = 4;
 // Coins: 5 coins per clean day
 export const COINS_PER_CLEAN_DAY = 5;
